@@ -1,4 +1,4 @@
-# discordpost.php.ini
+# discordpost.ini.php
 
  discordの webhookを使って、discordへのポストを実施するpukiwikiプラグイン。
  webhookの仕組み・仕様をもとに、次のような仕様動作とする
