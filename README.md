@@ -31,7 +31,9 @@
 			// 最低でも１つ、識別名が'default'の設定が必要。  
  
  array形式になっているので、複数のwebhookを登録可能。
- pukiwiki側で『&discordpost(xxxx)』というように指定することで、識別名 xxxx のwebhookを叩く。
+ pukiwiki側で『&discordpost(xxxx)』というように指定することで、識別名 xxxx のwebhookを叩く。  
+ discord側に書き込む内容は、vars[$refer] に基づいた当該ページのURLです（通常、actionを呼び出したページのURL）  
+
 
 また、他のポスト処理からこのプラグインを呼び出すことも想定しています。  
 例えば commentプラグインの actionの最後のほう（書き込み処理が終わってreturnする前に）  
