@@ -1,29 +1,29 @@
 <?php
 // Plugin for PukiWiki
-// $Id: discordpost.inc.php,v 0.11  2025.Mar.19  Haruka Tomose  pukiwiki1.5.¸ş¤±
+// $Id: discordpost.inc.php,v 0.12  2025.Mar.20  Haruka Tomose  pukiwiki1.5.å‘ã‘
 // http://tomose.net/junk/index.php?Top%20Page.
 //
-// discord¤Î webhook¤ò»È¤Ã¤Æ¡¢discord¤Ø¤Î¥İ¥¹¥È¤ò¼Â»Ü¤¹¤ë¥×¥é¥°¥¤¥ó¡£
-// °ÊÁ°¤Ëºî¤Ã¤¿¥È¥é¥Ã¥¯¥Ğ¥Ã¥¯Á÷¿®¥×¥é¥°¥¤¥ó¤ò¤â¤È¤Ë¡¢
-//	Á÷¿®ÉôÊ¬¤ò discordÍÑ¤Ë½ñ¤­´¹¤¨¤¿´¶¤¸¡£
-// webhook¤Î»ÅÁÈ¤ß¡¦»ÅÍÍ¤ò¤â¤È¤Ë¡¢¼¡¤Î¤è¤¦¤Ê»ÅÍÍÆ°ºî¤È¤¹¤ë
+// discordã® webhookã‚’ä½¿ã£ã¦ã€discordã¸ã®ãƒã‚¹ãƒˆã‚’å®Ÿæ–½ã™ã‚‹ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ã€‚
+// ä»¥å‰ã«ä½œã£ãŸãƒˆãƒ©ãƒƒã‚¯ãƒãƒƒã‚¯é€ä¿¡ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ã‚’ã‚‚ã¨ã«ã€
+//	é€ä¿¡éƒ¨åˆ†ã‚’ discordç”¨ã«æ›¸ãæ›ãˆãŸæ„Ÿã˜ã€‚
+// webhookã®ä»•çµ„ã¿ãƒ»ä»•æ§˜ã‚’ã‚‚ã¨ã«ã€æ¬¡ã®ã‚ˆã†ãªä»•æ§˜å‹•ä½œã¨ã™ã‚‹
 
-// ¡¦¥İ¥¹¥ÈÆ°ºî¤Ï¡¢¡ÖÅö³º¥Ú¡¼¥¸¤ÎÀëÅÁ¤ò°Õ¿Ş¤·¤¿¤â¤Î¡×¡£
-//	¤½¤Î¥Ú¡¼¥¸¤Î¥ê¥ó¥¯¤ò¥İ¥¹¥È¤¹¤ë¡£
-//	¤½¤Î¥Ú¡¼¥¸¤Ëog¥¿¥°¤Ç¾ğÊó¤ò¤Ä¤±¤Æ¤¢¤ì¤Ğ¡¢¾ÜºÙ¤Ïdicord¤¬¾¡¼ê¤ËÉ½¼¨¤¹¤ë
-// ¡¦¥İ¥¹¥È¤Ï¼«Æ°¤Ç¤Ï¤Ê¤¯¡¢ÍøÍÑ¼Ô¤Ë¤è¤ë¡Ö¥Ü¥¿¥ó²¡²¼¡×¤ò¥È¥ê¥¬¡¼¤Ë¤¹¤ë¡£
-// ¡¦¤¤¤¿¤º¤éËÉ»ß¤Î¤¿¤á¡¢¥í¥°¥¤¥ó¾õÂÖ¤Ç¤Î¤ßÍ­¸ú¡£
-//¡¡¡¡¡Êwebhook¤Ï¿Í¤¬»ØÄê¤¹¤ë¤â¤Î¤Ç¤¢¤ë¤¿¤á¡¢¡ÖÆÃÄê¤Î¿Í¡×¤Ç¤Ê¤¤¤È¥À¥á¡£¡Ë
-//  ¾åµ­¤òÆ§¤Ş¤¨¡¢¥×¥é¥°¥¤¥óÆâ¤Ë¡Ö¥æ¡¼¥¶¡×¤È¡ÖÂĞ±ş¤¹¤ëwebhook¡×¤ò»ı¤¿¤»¤ë¡£
+// ãƒ»ãƒã‚¹ãƒˆå‹•ä½œã¯ã€ã€Œå½“è©²ãƒšãƒ¼ã‚¸ã®å®£ä¼ã‚’æ„å›³ã—ãŸã‚‚ã®ã€ã€‚
+//	ãã®ãƒšãƒ¼ã‚¸ã®ãƒªãƒ³ã‚¯ã‚’ãƒã‚¹ãƒˆã™ã‚‹ã€‚
+//	ãã®ãƒšãƒ¼ã‚¸ã«ogã‚¿ã‚°ã§æƒ…å ±ã‚’ã¤ã‘ã¦ã‚ã‚Œã°ã€è©³ç´°ã¯dicordãŒå‹æ‰‹ã«è¡¨ç¤ºã™ã‚‹
+// ãƒ»ãƒã‚¹ãƒˆã¯è‡ªå‹•ã§ã¯ãªãã€åˆ©ç”¨è€…ã«ã‚ˆã‚‹ã€Œãƒœã‚¿ãƒ³æŠ¼ä¸‹ã€ã‚’ãƒˆãƒªã‚¬ãƒ¼ã«ã™ã‚‹ã€‚
+// ãƒ»ã„ãŸãšã‚‰é˜²æ­¢ã®ãŸã‚ã€ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ…‹ã§ã®ã¿æœ‰åŠ¹ã€‚
+//ã€€ã€€ï¼ˆwebhookã¯äººãŒæŒ‡å®šã™ã‚‹ã‚‚ã®ã§ã‚ã‚‹ãŸã‚ã€ã€Œç‰¹å®šã®äººã€ã§ãªã„ã¨ãƒ€ãƒ¡ã€‚ï¼‰
+//  ä¸Šè¨˜ã‚’è¸ã¾ãˆã€ãƒ—ãƒ©ã‚°ã‚¤ãƒ³å†…ã«ã€Œãƒ¦ãƒ¼ã‚¶ã€ã¨ã€Œå¯¾å¿œã™ã‚‹webhookã€ã‚’æŒãŸã›ã‚‹ã€‚
 
 
-// ½ñ¼°
+// æ›¸å¼
 // #discordpost( [id] [,sent_state])
-// id : webhook¤Î¼±ÊÌÌ¾¡£Ç¤°Õ¤Ë·è¤á¤Æ¤è¤¤¡£¾ÊÎ¬»ş¤Ï'default'.
-//  <sent_state>¤ÎÃÍ°è
-// '_ready' ,NULL¡§ Ì¤Á÷¿®¡£¡ÖÁ÷¿®¡×¥Ü¥¿¥ó¤òÉ½¼¨¤¹¤ë¡£
-// '_sent' ¡§ Á÷¿®ºÑ¡£¤½¤â¤½¤â#discordpost¤Ë´Ø¤¹¤ëÉ½¼¨¤ò°ìÀÚ¤·¤Ê¤¤¡£
-// '_err' ¡ÊÂ¾Ç¤°ÕÃÍ¡Ë : Á÷¿®¤·¤¿¤¬¥¨¥é¡¼¡£¥Ü¥¿¥ó½Ğ¤µ¤Ê¤¤¡£
+// id : webhookã®è­˜åˆ¥åã€‚ä»»æ„ã«æ±ºã‚ã¦ã‚ˆã„ã€‚çœç•¥æ™‚ã¯'default'.
+//  <sent_state>ã®å€¤åŸŸ
+// '_ready' ,NULLï¼š æœªé€ä¿¡ã€‚ã€Œé€ä¿¡ã€ãƒœã‚¿ãƒ³ã‚’è¡¨ç¤ºã™ã‚‹ã€‚
+// '_sent' ï¼š é€ä¿¡æ¸ˆã€‚ãã‚‚ãã‚‚#discordpostã«é–¢ã™ã‚‹è¡¨ç¤ºã‚’ä¸€åˆ‡ã—ãªã„ã€‚
+// '_err' ï¼ˆä»–ä»»æ„å€¤ï¼‰ : é€ä¿¡ã—ãŸãŒã‚¨ãƒ©ãƒ¼ã€‚ãƒœã‚¿ãƒ³å‡ºã•ãªã„ã€‚
 
 
 
@@ -32,26 +32,36 @@ function plugin_discordpost_init()
 
 	$messages = array(
 		'_discordpost_mes'	=> array(
-			'premessage'	=> '#discordpost(): targetID=',
+			'premessage'	=> 'discordpost: targetID=',
 			'btn_send'	=> 'Post.',
-			'msg_badid'	=> '#discordpost(): Selected id isnot available.',
-			'msg_permit'	=> '#discordpost(): You donot have parmition to selected ID.'
+			'msg_badid'	=> 'discordpost: Selected id isnot available.',
+			'msg_permit'	=> 'discordpost: You donot have parmition to selected ID.'
 		),
 
-		'_discordpost_webhookid' => array(
-			// webhookÅĞÏ¿¡£½ñ¼°¤Ï¼¡¤Î¤È¤ª¤ê¡£
-			// '¼±ÊÌÌ¾' => 'ÍøÍÑ¤Ç¤­¤ë¥æ¡¼¥¶Ì¾|webhook url'
-			//	¼±ÊÌÌ¾¡§Ç¤°ÕÊ¸»úÎó¡£¥×¥é¥°¥¤¥ó°ú¿ô¤Ë»È¤¦.
-			//	ÍøÍÑ¤Ç¤­¤ë¥æ¡¼¥¶Ì¾¡§ pukiwiki¤Î¥æ¡¼¥¶Ì¾
-			//	webhook url¡§ÂĞ±ş¤¹¤ëwebhook url
-			// ºÇÄã¤Ç¤â£±¤Ä¡¢¼±ÊÌÌ¾¤¬'default'¤ÎÀßÄê¤¬É¬Í×¡£
-			'default'=> 'username|https://discord.com/api/webhooks/xxxxxxxxxxxxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-		
-		),
-		
+	
 	);
 
 	set_plugin_messages($messages);
+
+	// WebhookURLã®æƒ…å ±ã¯åˆ¥ãƒ•ã‚¡ã‚¤ãƒ«ã§ä¾›çµ¦ã€‚
+	require_once PLUGIN_DIR.'discord_webhookinfo.ini.php';
+	plugin_discord_webhookinfo_init();
+
+	// ã“ã‚Œã«ã‚ˆã‚Šã€webhookinfo ã‚’å®šç¾©ã—ãŸGlobal $_discord_webhookinfo ã‚’
+	// åˆ©ç”¨ã§ãã‚‹ã‚ˆã†ã«ãªã‚‹ã€‚
+	// ä»¥é™ãƒ—ãƒ©ã‚°ã‚¤ãƒ³æœ¬ä½“å´ã§ã¯æ¬¡ã®ã‚ˆã†ã«ã—ã¦å‹•ä½œã‚’è¡Œãˆã‚‹
+	//
+	// $tgtid == ãƒ—ãƒ©ã‚°ã‚¤ãƒ³å¼•æ•°ã§æŒ‡å®šã—ãŸIDã€‚
+	// ã“ã‚Œã‚’ã‚‚ã¨ã«è¦æ±‚WebhookãŒç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ã‹ã‚’ãƒã‚§ãƒƒã‚¯ã€‚
+	// if(!array_key_exists($tgtid,$_discord_webhookinfo)) {}
+	//
+	// ã„ã¾ã®ãƒ­ã‚°ã‚¤ãƒ³ãƒ¦ãƒ¼ã‚¶ãŒã“ã®Webhookã‚’ä½¿ã£ã¦ã„ã„ã‹
+	// $curuser=get_auth_user();
+	// if($_discord_webhookinfo[$tgtid][user]!=$curuser)
+	//
+	// ä»¥ä¸Šã§OKãªã‚‰ã€
+	//$_discord_webhookinfo[$tgtid][url] ãŒä½¿ã£ã¦ã‚ˆã„ webhookURL.
+
 }
 
 
@@ -62,60 +72,59 @@ function plugin_discordpost_inline()
 
 	global $script, $vars,  $digest;
 	global $_discordpost_mes;
-	global $_discordpost_webhookid;
+	global $_discord_webhookinfo;
 	static $number = array();
 
 	$page = isset($vars['page']) ? $vars['page'] : '';
 
-	// 1¥Ú¡¼¥¸Æâ¤Ç¤ÎÊ£¿ô»ÈÍÑÂĞ±ş¤Î¤ªÌóÂ«¡£
+	// 1ãƒšãƒ¼ã‚¸å†…ã§ã®è¤‡æ•°ä½¿ç”¨å¯¾å¿œã®ãŠç´„æŸã€‚
 	if (! isset($number[$page])) $number[$page] = 0; // Init
-	$discordpost_no = $number[$page]++; // ¤³¤ì¤¬¤³¤Îdiscordpost ¤Î¼±ÊÌÈÖ¹æ¤Ë¤Ê¤ë¡£
+	$discordpost_no = $number[$page]++; // ã“ã‚ŒãŒã“ã®discordpost ã®è­˜åˆ¥ç•ªå·ã«ãªã‚‹ã€‚
 	
-	// ¥Ñ¥é¥á¡¼¥¿¥Ê¥·¤Ê¤é¥¨¥é¡¼¡¦¡¦¡¦¤Ï¡¢ËÜ¥×¥é¥°¥¤¥ó¤Ç¤ÏÂ¸ºß¤·¤Ê¤¤¡£
+	// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒŠã‚·ãªã‚‰ã‚¨ãƒ©ãƒ¼ãƒ»ãƒ»ãƒ»ã¯ã€æœ¬ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ã§ã¯å­˜åœ¨ã—ãªã„ã€‚
 	//if (! func_num_args()) return $_discordpost_mes['msg_no_arg'] . "\n";
 
 	$args     = func_get_args();
 	$s_page   = htmlsc($page);
 	$s_digest = htmlsc($digest);
 	
-	$ttext = array_shift($args); //Á÷¿®ÂĞ¾İ¤Î Webhook¤Ø¤ÎID
+	$ttext = array_shift($args); //é€ä¿¡å¯¾è±¡ã® Webhookã¸ã®ID
 
 	if (! isset($number[$page])) $number[$page] = 0; // Init
 
 	if($ttext=='') { $ttext='default'; }
 
-	if(!array_key_exists($ttext,$_discordpost_webhookid)) {
-		//»ØÄê¤µ¤ì¤¿ID¤ËÂĞ±ş¤¹¤ëÅĞÏ¿¤¬¤Ê¤¤¡£
-		return $_discordpost_mes['msg_badid'] . "\n";
+	if(!array_key_exists($ttext,$_discord_webhookinfo)) {
+		//æŒ‡å®šã•ã‚ŒãŸIDã«å¯¾å¿œã™ã‚‹ç™»éŒ²ãŒãªã„ã€‚
+		return $_discordpost_mes['msg_badid'] ;
 	}
 
-	$tmp= explode('|',$_discordpost_webhookid[$ttext]);
-		// $tmp[0] : userÌ¾
+	//$tmp= explode('|',$_discordpost_webhookid[$ttext]);
+		// $tmp[0] : userå
 		// $tmp[1] : webhook url
 
-	// »ØÄê¤µ¤ì¤¿webhookÌ¾¤¬¸½ºß¤Î¥æ¡¼¥¶Ì¾¤ËÂĞ±ş¤·¤Æ¤¤¤Ê¤±¤ì¤Ğ¡¢¤ä¤Ï¤ê¥¢¥¦¥È¡£	
+	// æŒ‡å®šã•ã‚ŒãŸwebhookåãŒç¾åœ¨ã®ãƒ¦ãƒ¼ã‚¶åã«å¯¾å¿œã—ã¦ã„ãªã‘ã‚Œã°ã€ã‚„ã¯ã‚Šã‚¢ã‚¦ãƒˆã€‚	
 	$curusr = get_auth_user();
-
-	if( ($curusr=='')or($curusr!=$tmp[0])){
-		return $_discordpost_mes['msg_permit'] . "\n";
-
+	if( ($curusr=='')or
+		($_discord_webhookinfo[$ttext]['user']!=$curusr)){
+		return $_discordpost_mes['msg_permit'];
 	}
 
 	$trslt = (count($args)) ? array_shift($args): "_ready";
 		if(! $trslt ) $trslt= "_ready";
 
-	//¤¹¤Ç¤ËÁ÷¿®¤¹¤ß¤Ê¤é¡¢²èÌÌ¾å¤Ë¤Ï¤Ê¤Ë¤âÉ½¼¨¤·¤Ê¤¤¡£
+	//ã™ã§ã«é€ä¿¡ã™ã¿ãªã‚‰ã€ç”»é¢ä¸Šã«ã¯ãªã«ã‚‚è¡¨ç¤ºã—ãªã„ã€‚
 	if(	$trslt=='_sent'){ return ''; }
 	if(	$trslt!='_ready'){
-		// _ready¤Ç¤Ï¤Ê¤¤¤Ê¤é¤Ê¤ó¤é¤«¤Î¥¨¥é¡¼¤¬½ñ¤¤¤Æ¤¢¤ë¡£¤½¤Î¤Ş¤ŞÉ½¼¨¡£
+		// _readyã§ã¯ãªã„ãªã‚‰ãªã‚“ã‚‰ã‹ã®ã‚¨ãƒ©ãƒ¼ãŒæ›¸ã„ã¦ã‚ã‚‹ã€‚ãã®ã¾ã¾è¡¨ç¤ºã€‚
 		 return $trslt;
 	}
 
-	//°Ê²¼ _ready==Á÷¿®¤·¤Æ¤¤¤Ê¤¤¾ì¹ç.¡Ö¤³¤Î¥Ü¥¿¥ó¤ò²¡¤¹¤ÈÁ÷¿®¤¹¤ë¡×»İ¤ÎÉ½¼¨¡£	$rslt = "";
+	//ä»¥ä¸‹ _ready==é€ä¿¡ã—ã¦ã„ãªã„å ´åˆ.ã€Œã“ã®ãƒœã‚¿ãƒ³ã‚’æŠ¼ã™ã¨é€ä¿¡ã™ã‚‹ã€æ—¨ã®è¡¨ç¤ºã€‚	$rslt = "";
 	$rslt .= $_discordpost_mes['premessage'].$ttext."";
 	$btntxt = $_discordpost_mes['btn_send'];
 	if ( $trslt === '_ready' ) {
-		// ¥È¥é¥Ã¥¯¥Ğ¥Ã¥¯Á÷¿®¤¹¤ë¤¿¤á¤Î¥Ü¥¿¥óËä¤á¹ş¤ß¡£
+		// ãƒˆãƒ©ãƒƒã‚¯ãƒãƒƒã‚¯é€ä¿¡ã™ã‚‹ãŸã‚ã®ãƒœã‚¿ãƒ³åŸ‹ã‚è¾¼ã¿ã€‚
 
 		$rslt = <<<EOD
 <form action="$_script" method="post">$rslt
@@ -137,29 +146,33 @@ function plugin_discordpost_action()
 {
 	global $vars, $script, $cols,$rows;
 	global $_vote_plugin_votes;
-	global $_discordpost_webhookid;
+	global $_discord_webhookinfo;
 
-	//ÊÔ½¸¸¢¸Â¤¬¤Ê¤±¤ì¤Ğ¡¢Â¨¥¢¥¦¥È¡£
+	//ç·¨é›†æ¨©é™ãŒãªã‘ã‚Œã°ã€å³ã‚¢ã‚¦ãƒˆã€‚
 	if (!check_editable($vars['refer'])) return;
 
-	//°ú¿ô¤«¤éº£²ó¤Îwebhook¤òÆÃÄê¤¹¤ë¡£
+	//å¼•æ•°ã‹ã‚‰ä»Šå›ã®webhookã‚’ç‰¹å®šã™ã‚‹ã€‚
 	$tmp=$vars['webhookid'];
-	//Æş¤ê¸ıÂ¦¤ÇËÉ¤¤¤Ç¤¤¤ë¤Î¤ÇÏÀÍıÅª¤Ë¤Ï¤¢¤ê¤¨¤Ê¤¤¤¬¡¢°ì±ş¥Ğ¥«½ü¤±¡£
-	//ÃÎ¤é¤Ê¤¤ID»ØÄê¤·¤Æ¤­¤¿¤é¥¨¥é¡¼¡£
+	//å…¥ã‚Šå£å´ã§é˜²ã„ã§ã„ã‚‹ã®ã§è«–ç†çš„ã«ã¯ã‚ã‚Šãˆãªã„ãŒã€ä¸€å¿œãƒã‚«é™¤ã‘ã€‚
+	//çŸ¥ã‚‰ãªã„IDæŒ‡å®šã—ã¦ããŸã‚‰ã‚¨ãƒ©ãƒ¼ã€‚
 	if ($tmp=='') { $tmp='default'; }
-	if(!array_key_exists($tmp,$_discordpost_webhookid)) return; //ÂĞ±ş¤¹¤ëÅĞÏ¿¤Ê¤·¡£
+	if(!array_key_exists($tmp,$_discord_webhookinfo)) return; //å¯¾å¿œã™ã‚‹ç™»éŒ²ãªã—ã€‚
 
-	$tmp= explode('|',$_discordpost_webhookid[$tmp]);
-		// $tmp[0] : userÌ¾
+	//$tmp= explode('|',$_discordpost_webhookid[$tmp]);
+		// $tmp[0] : userå
 		// $tmp[1] : webhook url
 
-	//Æş¤ê¸ıÂ¦¤ÇËÉ¤¤¤Ç¤¤¤ë¤Î¤ÇÏÀÍıÅª¤Ë¤Ï¤¢¤ê¤¨¤Ê¤¤¤¬¡¢°ì±ş¥Ğ¥«½ü¤±¡£
-	// »ØÄê¤µ¤ì¤¿webhookÌ¾¤¬¸½ºß¤Î¥æ¡¼¥¶Ì¾¤ËÂĞ±ş¤·¤Æ¤¤¤Ê¤±¤ì¤Ğ¡¢¤ä¤Ï¤ê¥¢¥¦¥È¡£
+	//å…¥ã‚Šå£å´ã§é˜²ã„ã§ã„ã‚‹ã®ã§è«–ç†çš„ã«ã¯ã‚ã‚Šãˆãªã„ãŒã€ä¸€å¿œãƒã‚«é™¤ã‘ã€‚
+	// æŒ‡å®šã•ã‚ŒãŸwebhookåãŒç¾åœ¨ã®ãƒ¦ãƒ¼ã‚¶åã«å¯¾å¿œã—ã¦ã„ãªã‘ã‚Œã°ã€ã‚„ã¯ã‚Šã‚¢ã‚¦ãƒˆã€‚
 	$curusr = get_auth_user();
-	if($curusr=='') return; 
-	if($curusr!=$tmp[0]) return;
+	//if($curusr=='') return; 
+	//if($curusr!=$tmp[0]) return;
+	if( ($curusr=='')or
+		($_discord_webhookinfo[$tmp]['user']!=$curusr)){
+		return $_discordpost_mes['msg_permit'];
+	}
 
-	
+
 	$body ="";
 	$title = "";
 	$matches = array();
@@ -167,51 +180,53 @@ function plugin_discordpost_action()
 	$discordpost_no = $vars['discordpost_no'];
 
 
-	// Á÷¿®¡ª
-	$rsend = sendToDiscord($tmp[1]);
+	// é€ä¿¡ï¼
+	$rsend = plugin_discordpost_post($vars['webhookid'],0);
+	
 	//
+	if( $rsend==""){ $rsend="_sent";}
 	$msg= "&discordpost(".$vars['webhookid'].",".$rsend.")";	
 
-	// Á÷¿®·ë²Ì¤òÁ÷¿®¸µ¥Ú¡¼¥¸¤ËÈ¿±Ç¤¹¤ë¡£
-	// °ÊÁ°¤Î¸µ¥Ú¡¼¥¸¤Î¥Ç¡¼¥¿¤ò¼è¤ê½Ğ¤¹¡£
+	// é€ä¿¡çµæœã‚’é€ä¿¡å…ƒãƒšãƒ¼ã‚¸ã«åæ˜ ã™ã‚‹ã€‚
+	// ä»¥å‰ã®å…ƒãƒšãƒ¼ã‚¸ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–ã‚Šå‡ºã™ã€‚
 	$postdata_old  = get_source($vars['refer']);
 
-	// ¤½¤³¤Ë¤¢¤ë¡Öº£²ó¤ÎÂĞ¾İ¡×¤òÃµ¤·½Ğ¤¹¡£
-	// ¼õ¤±¼è¤Ã¤¿¥Ñ¥é¥á¡¼¥¿¤«¤é¡Ö$discordpost_noÈÖÌÜ¡×¤Î¥Ç¡¼¥¿¤Ê¤Î¤Ï¤ï¤«¤Ã¤Æ¤¤¤ë¡£
+	// ãã“ã«ã‚ã‚‹ã€Œä»Šå›ã®å¯¾è±¡ã€ã‚’æ¢ã—å‡ºã™ã€‚
+	// å—ã‘å–ã£ãŸãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‹ã‚‰ã€Œ$discordpost_noç•ªç›®ã€ã®ãƒ‡ãƒ¼ã‚¿ãªã®ã¯ã‚ã‹ã£ã¦ã„ã‚‹ã€‚
 
 	$skipflag = 0;
 	foreach ($postdata_old as $line)
 	{
 		if ( $skipflag || substr($line,0,1) == ' ' || substr($line,0,2) == '//' ){
-			// ¥³¥á¥ó¥È¹Ô¡¢PRE¹Ô¡¢¤ª¤è¤Ó¡Ö¥¹¥­¥Ã¥×¤¹¤ë¡×¾ò·ï¤Ç¤Ï¥¹¥­¥Ã¥×¡£
+			// ã‚³ãƒ¡ãƒ³ãƒˆè¡Œã€PREè¡Œã€ãŠã‚ˆã³ã€Œã‚¹ã‚­ãƒƒãƒ—ã™ã‚‹ã€æ¡ä»¶ã§ã¯ã‚¹ã‚­ãƒƒãƒ—ã€‚
 			$postdata .= $line;
 			continue;
 		}
 		$ct = preg_match_all('/&discordpost(\([^(){};]*\))/',$line, $out);
 		if ( $ct ){
-		// º£ÃíÌÜ¤·¤Æ¤¤¤ë¹Ô¤Ë $discordpost ¤¬¤¢¤ë¤³¤È¤¬Ê¬¤«¤Ã¤¿¤Î¤Ç¡¢¥Á¥§¥Ã¥¯¤·¤Æ¤¤¤¯¡£
+		// ä»Šæ³¨ç›®ã—ã¦ã„ã‚‹è¡Œã« $discordpost ãŒã‚ã‚‹ã“ã¨ãŒåˆ†ã‹ã£ãŸã®ã§ã€ãƒã‚§ãƒƒã‚¯ã—ã¦ã„ãã€‚
 		for($i=0; $i < $ct; $i++){
 		    if ($discordpost_ct++ == $discordpost_no ){
-			// ¤Ş¤µ¤Ëº£¸«¤Æ¤¤¤ë¤Î¤¬½ñ¤­´¹¤¨ÂĞ¾İ¡£ÃÖ¤­´¹¤¨¤ë¡£
+			// ã¾ã•ã«ä»Šè¦‹ã¦ã„ã‚‹ã®ãŒæ›¸ãæ›ãˆå¯¾è±¡ã€‚ç½®ãæ›ãˆã‚‹ã€‚
 			$line = preg_replace('/&discordpost(\([^(){};]*\))?/',$msg,$line,1);
-			$skipflag = 1; //ÃÖ´¹¤¨¤¿¤Î¤Ç¡¢°Ê¹ß¤Ï¤¹¤Ù¤Æ¥¹¥­¥Ã¥×¤¹¤ë¡£
+			$skipflag = 1; //ç½®æ›ãˆãŸã®ã§ã€ä»¥é™ã¯ã™ã¹ã¦ã‚¹ã‚­ãƒƒãƒ—ã™ã‚‹ã€‚
 			break;
 		    }
 		    else {
-			// º£¤¤¤ë¹Ô¤ËÊ£¿ô&discordpost¤¬¤¢¤Ã¤Æ¡¢¤Ş¤À¤¿¤É¤êÃå¤¤¤Æ¤¤¤Ê¤¤¡£
-			// ºÇ½é¤Î¤Û¤¦¤Ë¶á¤¤¤â¤Î£±¤Ä¤ò __discordpost__¤Ë½ñ¤­´¹¤¨¤ÆÂàÈò¡¢¼¡¤Ø¡£
+			// ä»Šã„ã‚‹è¡Œã«è¤‡æ•°&discordpostãŒã‚ã£ã¦ã€ã¾ã ãŸã©ã‚Šç€ã„ã¦ã„ãªã„ã€‚
+			// æœ€åˆã®ã»ã†ã«è¿‘ã„ã‚‚ã®ï¼‘ã¤ã‚’ __discordpost__ã«æ›¸ãæ›ãˆã¦é€€é¿ã€æ¬¡ã¸ã€‚
 			$line = preg_replace('/&discordpost(\([^(){};]*\))?;/','&___discordpost$1___;',$line,1);
 		    }
 		}
-		// Á´Éô½ª¤ï¤Ã¤¿¤Î¤Ç¡¢ÂàÈò¤·¤Æ¤¤¤¿ __discordpost__¤ò¸µ¤ËÌá¤¹¡£
+		// å…¨éƒ¨çµ‚ã‚ã£ãŸã®ã§ã€é€€é¿ã—ã¦ã„ãŸ __discordpost__ã‚’å…ƒã«æˆ»ã™ã€‚
 		$line = preg_replace('/&___discordpost(\([^(){};]*\))?___;/','&discordpost$1;',$line);
 	    }
 	    $postdata .= $line;
 	}
 
-	// ¤³¤³¤Ş¤Ç¤Ç¡¢¿·¤·¤¤postdata ¤¬¤Ç¤­¤Æ¤¤¤ë¡£
+	// ã“ã“ã¾ã§ã§ã€æ–°ã—ã„postdata ãŒã§ãã¦ã„ã‚‹ã€‚
 
-	// ÊÔ½¸¾×ÆÍÄ´ºº
+	// ç·¨é›†è¡çªèª¿æŸ»
 
 	if (md5(@join('', get_source($vars['refer']))) != $vars['digest']) {
 		$title = $_title_collided;
@@ -240,42 +255,66 @@ EOD;
 
 }
 
-
-
-function sendToDiscord($webhookUrl) {
+// discordã¸ã®ãƒã‚¹ãƒˆã‚’è¡Œã†é–¢æ•°ã€‚
+// æœ¬ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ä»¥å¤–ã‹ã‚‰ã‚‚å‘¼ã°ã‚Œã‚‹ã“ã¨ã‚’æƒ³å®šã—ã€å¼•æ•°ã‚’è¤‡æ•°æº–å‚™ã™ã‚‹
+// $webhookid :	åˆ©ç”¨ã™ã‚‹webhookã®è­˜åˆ¥æƒ…å ±ã€‚
+//		åˆ¥é€” discord_webhookinfo.ini.phpã§å®šç¾©ã™ã‚‹
+// $permition :	ã‚¢ã‚¯ã‚»ã‚¹åˆ¶å¾¡ã‚’è¡Œã†ã‹ã€‚ç„¡æ¡ä»¶ãƒã‚¹ãƒˆã‚’è¨±å®¹ã™ã‚‹ãŸã‚ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã€‚
+//		ç„¡æ¡ä»¶ãƒã‚¹ãƒˆã—ãŸã„å ´åˆã€Œ1ã€ã«ã™ã‚‹ã€‚
+//
+// æˆ»ã‚Šå€¤ï¼šæ­£å¸¸æˆåŠŸãªã‚‰ ''. ãã‚Œä»¥å¤–ã¯ã‚¨ãƒ©ãƒ¼æ–‡å­—åˆ—ã€‚
+function plugin_discordpost_post($webhookid,$permition) {
 	global $vars, $script, $cols,$rows;
 	global $_vote_plugin_votes;
+	global $_discord_webhookinfo;
+	global $_discordpost_mes;
 
-		//ÄÌÃÎ¥á¥»¥Ã¥¸¤òÀßÄê
-		//¥æ¡¼¥¶¡¼ID¤Ç¥á¥ó¥·¥ç¥ó¤·¤¿¤¤¾ì¹ç¤Ï¡¢<@discord_user_id>¤ÇÀßÄê
-		//eg.,'content'  => "<@1095224863111111111> Hello, this message is coming from PHP!",
+	//ãã‚‚ãã‚‚ã®ãƒã‚«é™¤ã‘ã€‚
+	if(!array_key_exists($webhookid,$_discord_webhookinfo)) {
+		//æŒ‡å®šã•ã‚ŒãŸIDã«å¯¾å¿œã™ã‚‹ç™»éŒ²ãŒãªã„ã€‚
+		return $_discordpost_mes['msg_badid'];
+	}
+
+	// æŒ‡å®šã•ã‚ŒãŸwebhookåãŒç¾åœ¨ã®ãƒ¦ãƒ¼ã‚¶åã«å¯¾å¿œã—ã¦ã„ãªã‘ã‚Œã°ã€ã‚„ã¯ã‚Šã‚¢ã‚¦ãƒˆã€‚	
+	$curusr = get_auth_user();
+	if($permition!=1){
+		if( ($curusr=='')or
+			($_discord_webhookinfo[$webhookid]['user']!=$curusr)){
+			return $_discordpost_mes['msg_permit'];
+		}
+	}
+
+
+	// ã“ã“ã¾ã§ããŸã‚‰ã€ãƒã‚¹ãƒˆå®Ÿæ–½ã—ã¦ã‚ˆã„ã€‚
 	$rslt="";
 
 	$content= $script."?".rawurlencode($vars['refer']);
 
-    $message = [
-        'content'  => $content,
-    ];
+	$message = [
+		'content'  => $content,
+	];
 
-    $ch = curl_init($webhookUrl);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8'));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($message));
+	$ch = curl_init($_discord_webhookinfo[$webhookid]['url']);
+	curl_setopt($ch, CURLOPT_POST, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8'));
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($message));
 
-    $response = curl_exec($ch);
+	$response = curl_exec($ch);
 
-    if (curl_errno($ch)) {
-        $rslt= 'Curl error: ' . curl_error($ch);
-    } else {
-        $rslt= '_sent';
-    }
+	if (curl_errno($ch)) {
+		$rslt= 'Curl error: ' . curl_error($ch);
+	} else {
+		$rslt= '';
+	}
 
-    curl_close($rslt);
+	curl_close($ch);
 
 	return $rslt;
 
 }
+
+
 
 ?>
